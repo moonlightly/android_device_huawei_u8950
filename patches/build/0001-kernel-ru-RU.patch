@@ -1,0 +1,77 @@
+From cba13c519309d6f2829d982ea2147d6a0da5fe55 Mon Sep 17 00:00:00 2001
+From: ksrt12 <kazakov12stepan2012@live.ru>
+Date: Sun, 25 Oct 2015 17:58:00 +0600
+Subject: [PATCH] kernel ru RU
+
+Change-Id: I493dafbebdae06d9dc0d768c1cfa490d1debf965
+---
+ core/tasks/kernel.mk        | 18 ++++++++++++++++--
+ envsetup.sh                 |  2 +-
+ target/product/full_base.mk |  2 +-
+ 3 files changed, 18 insertions(+), 4 deletions(-)
+
+diff --git a/core/tasks/kernel.mk b/core/tasks/kernel.mk
+index 293b867..568b549 100644
+--- a/core/tasks/kernel.mk
++++ b/core/tasks/kernel.mk
+@@ -186,7 +186,21 @@ ifneq ($(USE_CCACHE),)
+     ccache := $(strip $(wildcard $(ccache)))
+ endif
+ 
+-KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ccache) $(KERNEL_TOOLCHAIN_PATH)"
++ifneq ($(TARGET_KERNEL_CUSTOM_TOOLCHAIN),)
++    ifeq ($(HOST_OS),darwin)
++        TARGET_KERNEL_CUSTOM_TOOLCHAIN_PATH := prebuilt/darwin-x86/toolchain
++    else
++        TARGET_KERNEL_CUSTOM_TOOLCHAIN_PATH := prebuilt/linux-x86/toolchain
++    endif
++else
++    ifeq ($(HOST_OS),darwin)
++        TARGET_KERNEL_CUSTOM_TOOLCHAIN_PATH := prebuilts/gcc/darwin-x86/arm/arm-linux-androideabi-4.9/bin
++    else
++        TARGET_KERNEL_CUSTOM_TOOLCHAIN_PATH := prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin
++    endif
++    TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-
++endif
++ KERNEL_CROSS_COMPILE:=CROSS_COMPILE="$(ccache) $(ANDROID_BUILD_TOP)/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN_PATH)/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)"
+ ccache =
+ 
+ define mv-modules
+@@ -194,7 +208,7 @@ define mv-modules
+     if [ "$$mdpath" != "" ];then\
+         mpath=`dirname $$mdpath`;\
+         ko=`find $$mpath/kernel -type f -name *.ko`;\
+-        for i in $$ko; do $(KERNEL_TOOLCHAIN_PATH)strip --strip-unneeded $$i;\
++        for i in $$ko; do $(ANDROID_BUILD_TOP)/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN_PATH)/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)strip --strip-unneeded $$i;\
+         mv $$i $(KERNEL_MODULES_OUT)/; done;\
+     fi
+ endef
+diff --git a/envsetup.sh b/envsetup.sh
+index 2f019f9..e45dc46 100644
+--- a/envsetup.sh
++++ b/envsetup.sh
+@@ -2101,7 +2101,7 @@ function mka() {
+             make -j `sysctl hw.ncpu|cut -d" " -f2` "$@"
+             ;;
+         *)
+-            mk_timer schedtool -B -n 1 -e ionice -n 1 make -j$(cat /proc/cpuinfo | grep "^processor" | wc -l) "$@"
++            mk_timer schedtool -B -n 1 -e ionice -n 1 make -j2 "$@"
+             ;;
+     esac
+ }
+diff --git a/target/product/full_base.mk b/target/product/full_base.mk
+index 2ba2ced..79dd073 100644
+--- a/target/product/full_base.mk
++++ b/target/product/full_base.mk
+@@ -28,7 +28,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
+     ro.com.android.dateformat=MM-dd-yyyy
+ 
+ # Put en_US first in the list, so make it default.
+-PRODUCT_LOCALES := en_US
++PRODUCT_LOCALES := ru_RU
+ 
+ # Include drawables for all densities
+ PRODUCT_AAPT_CONFIG := normal
+-- 
+2.1.4
+

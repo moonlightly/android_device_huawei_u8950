@@ -1,0 +1,28 @@
+From d024b46f46906b3d95f44dd1950e627082ec0626 Mon Sep 17 00:00:00 2001
+From: ksrt12 <kazakov12stepan2012@live.ru>
+Date: Fri, 9 Oct 2015 15:04:00 +0600
+Subject: [PATCH] init d
+
+Change-Id: I71cfc1a07751ae3c5caf8541150aac30f3834f16
+---
+ rootdir/init.rc | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/rootdir/init.rc b/rootdir/init.rc
+index b71908c..71e5815 100644
+--- a/rootdir/init.rc
++++ b/rootdir/init.rc
+@@ -716,3 +716,10 @@ service logcatd /system/bin/logcat -b all -v threadtime -v usec -v printable -D
+     # logd for write to /data/misc/logd, log group for read from log daemon
+     user logd
+     group log
++
++service sysinit /system/bin/sh /system/bin/sysinit
++    class main
++    user root
++    oneshot
++
++start sysinit
+-- 
+2.1.4
+
