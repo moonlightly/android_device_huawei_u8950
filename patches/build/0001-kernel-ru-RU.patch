@@ -1,17 +1,16 @@
-From cba13c519309d6f2829d982ea2147d6a0da5fe55 Mon Sep 17 00:00:00 2001
+From e29d4f796741bf6e0bdd387019bf47314d49cd1f Mon Sep 17 00:00:00 2001
 From: ksrt12 <kazakov12stepan2012@live.ru>
-Date: Sun, 25 Oct 2015 17:58:00 +0600
-Subject: [PATCH] kernel ru RU
+Date: Thu, 29 Oct 2015 20:31:39 +0600
+Subject: [PATCH]  kernel ru RU
 
-Change-Id: I493dafbebdae06d9dc0d768c1cfa490d1debf965
+Change-Id: I38c87635312acbc095cf509b6d6d292f4da2c40a
 ---
  core/tasks/kernel.mk        | 18 ++++++++++++++++--
- envsetup.sh                 |  2 +-
  target/product/full_base.mk |  2 +-
- 3 files changed, 18 insertions(+), 4 deletions(-)
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/core/tasks/kernel.mk b/core/tasks/kernel.mk
-index 293b867..568b549 100644
+index d43e8e1..6209172 100644
 --- a/core/tasks/kernel.mk
 +++ b/core/tasks/kernel.mk
 @@ -186,7 +186,21 @@ ifneq ($(USE_CCACHE),)
@@ -46,19 +45,6 @@ index 293b867..568b549 100644
          mv $$i $(KERNEL_MODULES_OUT)/; done;\
      fi
  endef
-diff --git a/envsetup.sh b/envsetup.sh
-index 2f019f9..e45dc46 100644
---- a/envsetup.sh
-+++ b/envsetup.sh
-@@ -2101,7 +2101,7 @@ function mka() {
-             make -j `sysctl hw.ncpu|cut -d" " -f2` "$@"
-             ;;
-         *)
--            mk_timer schedtool -B -n 1 -e ionice -n 1 make -j$(cat /proc/cpuinfo | grep "^processor" | wc -l) "$@"
-+            mk_timer schedtool -B -n 1 -e ionice -n 1 make -j2 "$@"
-             ;;
-     esac
- }
 diff --git a/target/product/full_base.mk b/target/product/full_base.mk
 index 2ba2ced..79dd073 100644
 --- a/target/product/full_base.mk
