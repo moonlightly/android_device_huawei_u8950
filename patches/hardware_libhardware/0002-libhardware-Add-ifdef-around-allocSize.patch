@@ -1,0 +1,35 @@
+From 5ec5682ffba6b7bb088ade685bdc38d33488f8b3 Mon Sep 17 00:00:00 2001
+From: Steve Kondik <shade@chemlab.org>
+Date: Tue, 12 Nov 2013 19:04:02 -0800
+Subject: [PATCH 2/2] libhardware: Add ifdef around allocSize
+
+ * Non-QCOM legacy devices with prebuilt grallocs hate this.
+
+Change-Id: I57ce7547e99ec0cf40c4f05f3742348dec4e2d9d
+---
+ include/hardware/gralloc.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/hardware/gralloc.h b/include/hardware/gralloc.h
+index 196622e..7cc1dd3 100644
+--- a/include/hardware/gralloc.h
++++ b/include/hardware/gralloc.h
+@@ -343,6 +343,7 @@ typedef struct gralloc_module_t {
+ typedef struct alloc_device_t {
+     struct hw_device_t common;
+ 
++#ifdef QCOM_BSP_LEGACY
+     /*
+      * (*allocSize)() Allocates a buffer in graphic memory with the requested
+      * bufferSize parameter and returns a buffer_handle_t and the stride in
+@@ -355,6 +356,7 @@ typedef struct alloc_device_t {
+     int (*allocSize)(struct alloc_device_t* dev,
+             int w, int h, int format, int usage,
+             buffer_handle_t* handle, int* stride, int bufferSize);
++#endif
+ 
+     /* 
+      * (*alloc)() Allocates a buffer in graphic memory with the requested
+-- 
+2.1.4
+
