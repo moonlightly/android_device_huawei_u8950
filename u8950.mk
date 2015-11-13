@@ -51,7 +51,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	gsm.version.baseband=1040 \
 	rild.libpath=/system/lib/libril-qc-1.so \
-	ro.telephony.ril.config=qcomdsds,skippinpukcount,signalstrength \
 	ro.telephony.ril_class=HuaweiRIL
 
 # Packages
