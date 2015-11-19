@@ -1,9 +1,9 @@
-From e29d4f796741bf6e0bdd387019bf47314d49cd1f Mon Sep 17 00:00:00 2001
+From 79cf32884fa4ae64b6d159a4f6757f5751499833 Mon Sep 17 00:00:00 2001
 From: ksrt12 <kazakov12stepan2012@live.ru>
-Date: Thu, 29 Oct 2015 20:31:39 +0600
-Subject: [PATCH]  kernel ru RU
+Date: Thu, 19 Nov 2015 15:57:50 +0600
+Subject: [PATCH] kernel ru RU
 
-Change-Id: I38c87635312acbc095cf509b6d6d292f4da2c40a
+Change-Id: I4f32701f355a645178ec790d3ff290f585f5d5f4
 ---
  core/tasks/kernel.mk        | 18 ++++++++++++++++--
  target/product/full_base.mk |  2 +-
@@ -46,18 +46,18 @@ index d43e8e1..6209172 100644
      fi
  endef
 diff --git a/target/product/full_base.mk b/target/product/full_base.mk
-index 2ba2ced..79dd073 100644
+index bac3e03..76c9fc7 100644
 --- a/target/product/full_base.mk
 +++ b/target/product/full_base.mk
-@@ -28,7 +28,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
-     ro.com.android.dateformat=MM-dd-yyyy
+@@ -24,7 +24,7 @@ PRODUCT_PACKAGES := \
+     WAPPushManager
  
  # Put en_US first in the list, so make it default.
 -PRODUCT_LOCALES := en_US
 +PRODUCT_LOCALES := ru_RU
  
- # Include drawables for all densities
- PRODUCT_AAPT_CONFIG := normal
+ # Get some sounds
+ $(call inherit-product-if-exists, frameworks/base/data/sounds/AllAudio.mk)
 -- 
-2.1.4
+2.5.0
 
