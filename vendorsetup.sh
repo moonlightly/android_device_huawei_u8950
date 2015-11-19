@@ -1,11 +1,7 @@
 # Patches
-if [ ! -e device/huawei/ril ]
-then
-sh device/huawei/u8950/patches/telephony.sh
-touch device/huawei/ril
-fi
 if [ ! -e device/huawei/ok ]
 then
+sh device/huawei/u8950/patches/fix.sh
 sh device/huawei/msm7x27a-common/patches/apply.sh
 sh device/huawei/u8950/patches/apply.sh
 touch device/huawei/ok
