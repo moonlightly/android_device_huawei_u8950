@@ -1,0 +1,29 @@
+From e8a13c2a3e37f0a5381541c2ad38d169ca739bdb Mon Sep 17 00:00:00 2001
+From: ksrt12 <kazakov12stepan2012@live.ru>
+Date: Thu, 19 Nov 2015 16:49:22 +0600
+Subject: [PATCH] add kernel cleanspec
+
+Change-Id: I0769de3396afd5a0e98b4211551e41085e95d135
+---
+ CleanSpec.mk | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/CleanSpec.mk b/CleanSpec.mk
+index 64d84e3..63f71de 100644
+--- a/CleanSpec.mk
++++ b/CleanSpec.mk
+@@ -371,6 +371,11 @@ $(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/APPS/*)
+ 
+ $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/build.prop)
+ 
++# Kernel
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNRL_OBJ/vmlinux*)
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNRL_OBJ/arch/arm/boot)
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/lib/modules/*)
++
+ # ************************************************
+ # NEWER CLEAN STEPS MUST BE AT THE END OF THE LIST
+ # ************************************************
+-- 
+2.5.0
+
