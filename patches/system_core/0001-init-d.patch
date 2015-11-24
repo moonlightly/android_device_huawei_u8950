@@ -1,21 +1,21 @@
-From ac37a23fea4c97a45331616722dc6020c00f58f5 Mon Sep 17 00:00:00 2001
+From d097b389a356b93cf03477514a2bdf8b38950d6a Mon Sep 17 00:00:00 2001
 From: ksrt12 <kazakov12stepan2012@live.ru>
-Date: Thu, 19 Nov 2015 16:00:28 +0600
+Date: Tue, 24 Nov 2015 16:42:57 +0600
 Subject: [PATCH] init d
 
-Change-Id: I6e29247b5fb970bf69d6d682021bef23656d0bcb
+Change-Id: I510aa2354055d0d00fabcb077f69788e0febcb48
 ---
  rootdir/init.rc | 7 +++++++
  1 file changed, 7 insertions(+)
 
 diff --git a/rootdir/init.rc b/rootdir/init.rc
-index 4b644bc..1ded50f 100644
+index babeb02..59c1cc5 100644
 --- a/rootdir/init.rc
 +++ b/rootdir/init.rc
-@@ -765,3 +765,10 @@ service logcatd /system/bin/logcat -b all -v threadtime -v usec -v printable -D
+@@ -728,3 +728,10 @@ service logcatd /system/bin/logcat -b all -v threadtime -v usec -v printable -D
+     # logd for write to /data/misc/logd, log group for read from log daemon
      user logd
      group log
-     writepid /dev/cpuset/system-background/tasks
 +
 +service sysinit /system/bin/sh /system/bin/sysinit
 +    class main
