@@ -55,7 +55,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Packages
 PRODUCT_PACKAGES += \
-	RootExplorer
+	RootExplorer \
+	SlimUpdater
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 
