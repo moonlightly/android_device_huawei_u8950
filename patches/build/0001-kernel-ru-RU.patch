@@ -1,19 +1,42 @@
-From 79cf32884fa4ae64b6d159a4f6757f5751499833 Mon Sep 17 00:00:00 2001
+From 86aec22b2911256edf756d247a429b8cb4bf3a8b Mon Sep 17 00:00:00 2001
 From: ksrt12 <kazakov12stepan2012@live.ru>
-Date: Thu, 19 Nov 2015 15:57:50 +0600
+Date: Tue, 24 Nov 2015 16:40:40 +0600
 Subject: [PATCH] kernel ru RU
 
-Change-Id: I4f32701f355a645178ec790d3ff290f585f5d5f4
+Change-Id: I9c3876e8f3d9dee8373426ce6c3fdcb58441557b
 ---
- core/tasks/kernel.mk        | 18 ++++++++++++++++--
+ CleanSpec.mk                | 11 +++++++++++
+ core/tasks/kernel.mk        | 14 ++++++++++++--
  target/product/full_base.mk |  2 +-
- 2 files changed, 17 insertions(+), 3 deletions(-)
+ 3 files changed, 24 insertions(+), 3 deletions(-)
 
+diff --git a/CleanSpec.mk b/CleanSpec.mk
+index 64d84e3..4f2d4c3 100644
+--- a/CleanSpec.mk
++++ b/CleanSpec.mk
+@@ -371,6 +371,17 @@ $(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/APPS/*)
+ 
+ $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/build.prop)
+ 
++# Kernel
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/lib/modules/*)
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNRL_OBJ/vmlinux*)
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNRL_OBJ/arch/arm/boot)
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNEL_OBJ/System.map)
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNEL_OBJ/.tmp_kallsyms*)
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNEL_OBJ/.tmp_System.map)
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNEL_OBJ/.tmp_vmlinux*)
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNEL_OBJ/.version)
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNEL_OBJ/.vmlinux*)
++
+ # ************************************************
+ # NEWER CLEAN STEPS MUST BE AT THE END OF THE LIST
+ # ************************************************
 diff --git a/core/tasks/kernel.mk b/core/tasks/kernel.mk
-index d43e8e1..6209172 100644
+index d43e8e1..d391e69 100644
 --- a/core/tasks/kernel.mk
 +++ b/core/tasks/kernel.mk
-@@ -186,7 +186,21 @@ ifneq ($(USE_CCACHE),)
+@@ -186,7 +186,17 @@ ifneq ($(USE_CCACHE),)
      ccache := $(strip $(wildcard $(ccache)))
  endif
  
@@ -24,29 +47,25 @@ index d43e8e1..6209172 100644
 +    else
 +        TARGET_KERNEL_CUSTOM_TOOLCHAIN_PATH := prebuilt/linux-x86/toolchain
 +    endif
++MOD_TOOL := $(ANDROID_BUILD_TOP)/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN_PATH)/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)
 +else
-+    ifeq ($(HOST_OS),darwin)
-+        TARGET_KERNEL_CUSTOM_TOOLCHAIN_PATH := prebuilts/gcc/darwin-x86/arm/arm-linux-androideabi-4.9/bin
-+    else
-+        TARGET_KERNEL_CUSTOM_TOOLCHAIN_PATH := prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin
-+    endif
-+    TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-
++MOD_TOOL := $(KERNEL_TOOLCHAIN_PATH)
 +endif
-+ KERNEL_CROSS_COMPILE:=CROSS_COMPILE="$(ccache) $(ANDROID_BUILD_TOP)/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN_PATH)/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)"
++KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ccache) $(MOD_TOOL)"
  ccache =
  
  define mv-modules
-@@ -194,7 +208,7 @@ define mv-modules
+@@ -194,7 +204,7 @@ define mv-modules
      if [ "$$mdpath" != "" ];then\
          mpath=`dirname $$mdpath`;\
          ko=`find $$mpath/kernel -type f -name *.ko`;\
 -        for i in $$ko; do $(KERNEL_TOOLCHAIN_PATH)strip --strip-unneeded $$i;\
-+        for i in $$ko; do $(ANDROID_BUILD_TOP)/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN_PATH)/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)strip --strip-unneeded $$i;\
++        for i in $$ko; do $(MOD_TOOL)strip --strip-unneeded $$i;\
          mv $$i $(KERNEL_MODULES_OUT)/; done;\
      fi
  endef
 diff --git a/target/product/full_base.mk b/target/product/full_base.mk
-index bac3e03..76c9fc7 100644
+index fc6fd5c..8c85cd7 100644
 --- a/target/product/full_base.mk
 +++ b/target/product/full_base.mk
 @@ -24,7 +24,7 @@ PRODUCT_PACKAGES := \
@@ -60,4 +79,3 @@ index bac3e03..76c9fc7 100644
  $(call inherit-product-if-exists, frameworks/base/data/sounds/AllAudio.mk)
 -- 
 2.5.0
-
