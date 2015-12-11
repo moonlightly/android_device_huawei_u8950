@@ -43,10 +43,11 @@ PRODUCT_COPY_FILES += \
 	device/huawei/u8950/keylayout/Generic.kl:system/usr/keylayout/Generic.kl
 
 # Properties
+VERS := $(shell echo $(PLATFORM_VERSION) | sed 's/\./_/g')
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.confg.hw_appfsversion=u8950V6_0_SYSIMG \
-	ro.confg.hw_appsbootversion=u8950V6_0_APPSBOOT \
-	ro.confg.hw_appversion=u8950V6_0_KERNEL\
+	ro.confg.hw_appfsversion=u8950V$(VERS)_SYSIMG \
+	ro.confg.hw_appsbootversion=u8950V$(VERS)_APPSBOOT \
+	ro.confg.hw_appversion=u8950V$(VERS)_KERNEL\
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	gsm.version.baseband=1040 \
