@@ -1,39 +1,33 @@
-From 86aec22b2911256edf756d247a429b8cb4bf3a8b Mon Sep 17 00:00:00 2001
+From d0e76043866a50643037045be5748379ea6731c0 Mon Sep 17 00:00:00 2001
 From: ksrt12 <kazakov12stepan2012@live.ru>
-Date: Tue, 24 Nov 2015 16:40:40 +0600
+Date: Fri, 18 Dec 2015 14:29:53 +0600
 Subject: [PATCH] kernel ru RU
 
-Change-Id: I9c3876e8f3d9dee8373426ce6c3fdcb58441557b
+Change-Id: Ie8b62e829951b2d92725441164c23d209306c693
 ---
- CleanSpec.mk                | 11 +++++++++++
- core/tasks/kernel.mk        | 14 ++++++++++++--
+ CleanSpec.mk                |  5 +++++
+ core/tasks/kernel.mk        | 12 +++++++++++-
  target/product/full_base.mk |  2 +-
- 3 files changed, 24 insertions(+), 3 deletions(-)
+ 3 files changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/CleanSpec.mk b/CleanSpec.mk
-index 64d84e3..4f2d4c3 100644
+index 64d84e3..d264da0 100644
 --- a/CleanSpec.mk
 +++ b/CleanSpec.mk
-@@ -371,6 +371,17 @@ $(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/APPS/*)
+@@ -371,6 +371,11 @@ $(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/APPS/*)
  
  $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/build.prop)
  
 +# Kernel
 +$(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/lib/modules/*)
-+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNRL_OBJ/vmlinux*)
-+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNRL_OBJ/arch/arm/boot)
-+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNEL_OBJ/System.map)
-+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNEL_OBJ/.tmp_kallsyms*)
-+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNEL_OBJ/.tmp_System.map)
-+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNEL_OBJ/.tmp_vmlinux*)
-+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNEL_OBJ/.version)
-+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNEL_OBJ/.vmlinux*)
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/KERNRL_OBJ/*)
++
 +
  # ************************************************
  # NEWER CLEAN STEPS MUST BE AT THE END OF THE LIST
  # ************************************************
 diff --git a/core/tasks/kernel.mk b/core/tasks/kernel.mk
-index d43e8e1..d391e69 100644
+index d1d24d6..e4c562d 100644
 --- a/core/tasks/kernel.mk
 +++ b/core/tasks/kernel.mk
 @@ -186,7 +186,17 @@ ifneq ($(USE_CCACHE),)
@@ -55,17 +49,8 @@ index d43e8e1..d391e69 100644
  ccache =
  
  define mv-modules
-@@ -194,7 +204,7 @@ define mv-modules
-     if [ "$$mdpath" != "" ];then\
-         mpath=`dirname $$mdpath`;\
-         ko=`find $$mpath/kernel -type f -name *.ko`;\
--        for i in $$ko; do $(KERNEL_TOOLCHAIN_PATH)strip --strip-unneeded $$i;\
-+        for i in $$ko; do $(MOD_TOOL)strip --strip-unneeded $$i;\
-         mv $$i $(KERNEL_MODULES_OUT)/; done;\
-     fi
- endef
 diff --git a/target/product/full_base.mk b/target/product/full_base.mk
-index fc6fd5c..8c85cd7 100644
+index bac3e03..76c9fc7 100644
 --- a/target/product/full_base.mk
 +++ b/target/product/full_base.mk
 @@ -24,7 +24,7 @@ PRODUCT_PACKAGES := \
@@ -78,4 +63,5 @@ index fc6fd5c..8c85cd7 100644
  # Get some sounds
  $(call inherit-product-if-exists, frameworks/base/data/sounds/AllAudio.mk)
 -- 
-2.5.0
+2.6.4
+
