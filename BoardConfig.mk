@@ -34,7 +34,7 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/huawei/u8950/bluetooth
 BOARD_HAVE_BLUETOOTH_BCM := true
 
 # RIL
-PREBUILT_RIL := true
+#PREBUILT_RIL := true
 #BOARD_RIL_CLASS := ../../../device/huawei/u8950/ril/
 
 # Kernel

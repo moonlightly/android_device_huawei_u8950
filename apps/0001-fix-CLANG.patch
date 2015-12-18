@@ -1,0 +1,26 @@
+From 2b27a6e7f8acfcfd9d37185ba5462779456e23a7 Mon Sep 17 00:00:00 2001
+From: ksrt12 <kazakov12stepan2012@live.ru>
+Date: Fri, 18 Dec 2015 19:42:42 +0600
+Subject: [PATCH] fix CLANG
+
+Change-Id: I44ba783c36ab353d81d531e51ea25a81acc0a0d1
+---
+ build/Android.common_build.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/build/Android.common_build.mk b/build/Android.common_build.mk
+index 169a651..c7333b8 100644
+--- a/build/Android.common_build.mk
++++ b/build/Android.common_build.mk
+@@ -72,7 +72,7 @@ ART_TARGET_CFLAGS :=
+ 
+ # Host.
+ ART_HOST_CLANG := false
+-ifneq ($(WITHOUT_HOST_CLANG),true)
++ifeq ($(WITHOUT_HOST_CLANG),false)
+   # By default, host builds use clang for better warnings.
+   ART_HOST_CLANG := true
+ endif
+-- 
+2.6.4
+
