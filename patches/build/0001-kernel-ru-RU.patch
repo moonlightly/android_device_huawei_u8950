@@ -1,14 +1,14 @@
-From d0e76043866a50643037045be5748379ea6731c0 Mon Sep 17 00:00:00 2001
+From 936bc431c80ee7d2eff1f90ace344b8f00d7960f Mon Sep 17 00:00:00 2001
 From: ksrt12 <kazakov12stepan2012@live.ru>
-Date: Fri, 18 Dec 2015 14:29:53 +0600
+Date: Fri, 18 Dec 2015 14:35:20 +0600
 Subject: [PATCH] kernel ru RU
 
-Change-Id: Ie8b62e829951b2d92725441164c23d209306c693
+Change-Id: Ib44c6aa84fcc677f3e0810e9f97b6bae9396f259
 ---
  CleanSpec.mk                |  5 +++++
- core/tasks/kernel.mk        | 12 +++++++++++-
+ core/tasks/kernel.mk        | 14 ++++++++++++--
  target/product/full_base.mk |  2 +-
- 3 files changed, 17 insertions(+), 2 deletions(-)
+ 3 files changed, 18 insertions(+), 3 deletions(-)
 
 diff --git a/CleanSpec.mk b/CleanSpec.mk
 index 64d84e3..d264da0 100644
@@ -27,7 +27,7 @@ index 64d84e3..d264da0 100644
  # NEWER CLEAN STEPS MUST BE AT THE END OF THE LIST
  # ************************************************
 diff --git a/core/tasks/kernel.mk b/core/tasks/kernel.mk
-index d1d24d6..e4c562d 100644
+index d1d24d6..0c33a01 100644
 --- a/core/tasks/kernel.mk
 +++ b/core/tasks/kernel.mk
 @@ -186,7 +186,17 @@ ifneq ($(USE_CCACHE),)
@@ -49,6 +49,15 @@ index d1d24d6..e4c562d 100644
  ccache =
  
  define mv-modules
+@@ -194,7 +204,7 @@ define mv-modules
+     if [ "$$mdpath" != "" ];then\
+         mpath=`dirname $$mdpath`;\
+         ko=`find $$mpath/kernel -type f -name *.ko`;\
+-        for i in $$ko; do $(KERNEL_TOOLCHAIN_PATH)strip --strip-unneeded $$i;\
++        for i in $$ko; do $(MOD_TOOL)strip --strip-unneeded $$i;\
+         mv $$i $(KERNEL_MODULES_OUT)/; done;\
+     fi
+ endef
 diff --git a/target/product/full_base.mk b/target/product/full_base.mk
 index bac3e03..76c9fc7 100644
 --- a/target/product/full_base.mk
