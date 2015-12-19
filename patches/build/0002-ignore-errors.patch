@@ -1,0 +1,38 @@
+From a2eed28543df7ce3f29399e6203bd55b3e643fab Mon Sep 17 00:00:00 2001
+From: ksrt12 <kazakov12stepan2012@live.ru>
+Date: Sat, 19 Dec 2015 15:55:10 +0600
+Subject: [PATCH 2/2] ignore errors
+
+Change-Id: I65623a0832e5445b58919528ee894cf69b14508b
+---
+ envsetup.sh | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/envsetup.sh b/envsetup.sh
+index cb49f2a..65b8fb5 100644
+--- a/envsetup.sh
++++ b/envsetup.sh
+@@ -2103,13 +2103,19 @@ function cmrebase() {
+ 
+ function mka() {
+     local T=$(gettop)
++
++    if [[ $IGNORE_BUILD_ERRORS -eq 1 ]]; then
++        iberr=-i
++    else
++        iberr=
++    fi
+     if [ "$T" ]; then
+         case `uname -s` in
+             Darwin)
+                 make -C $T -j `sysctl hw.ncpu|cut -d" " -f2` "$@"
+                 ;;
+             *)
+-                mk_timer schedtool -B -n 1 -e ionice -n 1 make -C $T -j$(cat /proc/cpuinfo | grep "^processor" | wc -l) "$@"
++                mk_timer schedtool -B -n 1 -e ionice -n 1 make -C $T $iberr -j$(cat /proc/cpuinfo | grep "^processor" | wc -l) "$@"
+                 ;;
+         esac
+ 
+-- 
+2.6.4
+
