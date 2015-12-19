@@ -1,31 +1,32 @@
-From a2eed28543df7ce3f29399e6203bd55b3e643fab Mon Sep 17 00:00:00 2001
+From 150c8f18283d0c8e06d0c814b2b9bc5b43aed146 Mon Sep 17 00:00:00 2001
 From: ksrt12 <kazakov12stepan2012@live.ru>
-Date: Sat, 19 Dec 2015 15:55:10 +0600
-Subject: [PATCH 2/2] ignore errors
+Date: Sat, 19 Dec 2015 16:12:41 +0600
+Subject: [PATCH] ignore errors
 
-Change-Id: I65623a0832e5445b58919528ee894cf69b14508b
+Change-Id: I0d060bc0c00a4ca7de64d2987d133d2da8b6785d
 ---
- envsetup.sh | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ envsetup.sh | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/envsetup.sh b/envsetup.sh
-index cb49f2a..65b8fb5 100644
+index cb49f2a..e005e71 100644
 --- a/envsetup.sh
 +++ b/envsetup.sh
-@@ -2103,13 +2103,19 @@ function cmrebase() {
+@@ -2102,14 +2102,19 @@ function cmrebase() {
+ }
  
  function mka() {
-     local T=$(gettop)
-+
 +    if [[ $IGNORE_BUILD_ERRORS -eq 1 ]]; then
 +        iberr=-i
 +    else
 +        iberr=
 +    fi
+     local T=$(gettop)
      if [ "$T" ]; then
          case `uname -s` in
              Darwin)
-                 make -C $T -j `sysctl hw.ncpu|cut -d" " -f2` "$@"
+-                make -C $T -j `sysctl hw.ncpu|cut -d" " -f2` "$@"
++                make -C $T $iberr -j `sysctl hw.ncpu|cut -d" " -f2` "$@"
                  ;;
              *)
 -                mk_timer schedtool -B -n 1 -e ionice -n 1 make -C $T -j$(cat /proc/cpuinfo | grep "^processor" | wc -l) "$@"
